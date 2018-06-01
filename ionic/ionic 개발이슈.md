@@ -71,3 +71,62 @@ https://ionicacademy.com/ionic-3-lazy-loading/
   - Ionic Page 구현시 ionic serve로 브라우저단 테스트중 코드 수정을 하면 Tabs가 사라지는 버그가 있다.
   - 해당 경우 tabs자체도 page화 시켜주면 된다.
   
+
+### Angular HTTP Intercepter
+
+https://medium.com/@ryanchenkie_40935/angular-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
+
+~~~typescript
+/** example code **/
+/** token.interceptor.ts **/
+@Injectable()
+export class AuthenticationInterceptor implements HttpInterceptor {
+  constructor(public auth: AuthService) {
+  }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (!!this.auth.getToken()) {
+      request = request.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+          Authorization: 'Token ' + this.auth.getToken(),
+        }
+      });
+    }
+    else {
+      request = request.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+        }
+      });
+    }
+
+    return next.handle(request);
+  }
+}
+
+export const httpProvider = {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true};
+
+/** app.module.ts **/
+@NgModule({
+  declarations: [
+    MyApp,
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp),
+    HttpClientModule,
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    httpProvider,
+  ]
+})
+~~~
