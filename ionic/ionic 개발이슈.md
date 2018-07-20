@@ -133,4 +133,6 @@ export const httpProvider = {provide: HTTP_INTERCEPTORS, useClass: Authenticatio
 
 
 ### Error: Module parse failed: Unterminated string constant
-해당 HTML파일 삭제 후 내용물 복사붙여넣기로 해결
+\u2028 이라는 zero-width 문자로 인한 에러
+
+Zero Width Characters locator 설치후 해당 문자 제거하면 오류해결
