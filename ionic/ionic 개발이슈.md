@@ -130,3 +130,7 @@ export const httpProvider = {provide: HTTP_INTERCEPTORS, useClass: Authenticatio
   ]
 })
 ~~~
+
+
+### Error: Module parse failed: Unterminated string constant
+해당 HTML파일 삭제 후 내용물 복사붙여넣기로 해결
