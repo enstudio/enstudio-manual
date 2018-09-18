@@ -2,7 +2,7 @@ Install PostgresSQL
 
 ```
 $ sudo apt-get update
-$ sudo apt-get install postgresql postgresql-contrib
+$ sudo apt-get install postgresql postgresql-contrib postgis
 ```
 
 Enter psql as 'postgres' user
